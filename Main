@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Memory</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow: hidden;
+        }
+        #stars {
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+            animation: animStar 50s linear infinite;
+        }
+        #stars:after {
+            content: " ";
+            position: absolute;
+            top: 2000px;
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+        }
+        @keyframes animStar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+        #loading, #login, #content {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: #FFF;
+        }
+        #loading {
+            font-size: 24px;
+        }
+        #login {
+            display: none;
+        }
+        #loginForm input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        #loginForm button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #content {
+            display: none;
+        }
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .image {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #FFF;
+        }
+    </style>
+</head>
+<body>
+    <div id="stars"></div>
+    <div id="loading">Loading: <span id="progress">0</span>%</div>
+
+    <div id="login">
+        <form id="loginForm">
+            <input type="password" id="code" required placeholder="Enter your code">
+            <button type="submit">Enter</button>
+        </form>
+    </div>
+
+    <div id="content">
+        <div id="gallery">
+            <!-- Placeholder for images -->
+        </div>
+        <h1>This is my memory. I will keep it forever.</h1>
+    </div>
+
+    <script>
+        const loading = document.getElementById('loading');
+        const login = document.getElementById('login');
+        const content = document.getElementById('content');
+        const progress = document.getElementById('progress');
+        const loginForm = document.getElementById('loginForm');
+        const gallery = document.getElementById('gallery');
+
+        // Simulated loading
+        let loadingProgress = 0;
+        const loadingInterval = setInterval(() => {
+            loadingProgress++;
+            progress.textContent = loadingProgress;
+            if (loadingProgress >= 100) {
+                clearInterval(loadingInterval);
+                loading.style.display = 'none';
+                login.style.display = 'block';
+            }
+        }, 50);
+
+        // Login form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code = document.getElementById('code').value;
+            if (code === 'Strawberry') {
+                login.style.display = 'none';
+                content.style.display = 'block';
+                displayImages();
+            } else {
+                alert('Incorrect code. Please try again.');
+            }
+        });
+
+        // Display images
+        function displayImages() {
+            for (let i = 1; i <= 10; i++) {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'image';
+                imageDiv.textContent = i;
+                gallery.appendChild(imageDiv);
+            }
+        }
+    </script>
+</body>
+</html>
